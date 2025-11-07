@@ -8,6 +8,12 @@ env:
     AWS_ACCOUNT_ID: "/codebuild/aws_account_id"
 
 phases:
+  install:
+    commands:
+      - echo "AWS_REGION=$AWS_REGION"
+      - echo "REPOSITORY_URI=$REPOSITORY_URI"
+      - echo "IMAGE_TAG=$IMAGE_TAG"
+
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
