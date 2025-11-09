@@ -2,10 +2,10 @@
 set -euo pipefail
 
 # Expected env vars:
-# AWS_REGION - e.g. ap-south-1
-# EKS_CLUSTER - cluster name (e.g. guviproject-eks-cluster)
+# AWS_REGION - ap-south-1
+# EKS_CLUSTER - guviproject-eks-cluster
 # AWS_ACCOUNT_ID - your account id
-# ECR_REPO - e.g. brain-tasks-app
+# ECR_REPO - brain-tasks-app
 # IMAGE_TAG - tag to deploy (if empty, fallback to CODEBUILD_RESOLVED_SOURCE_VERSION)
 
 : "${AWS_REGION:?Please set AWS_REGION}"
