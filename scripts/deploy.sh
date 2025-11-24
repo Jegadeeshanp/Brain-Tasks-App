@@ -6,7 +6,7 @@ set -euo pipefail
 # EKS_CLUSTER - guviproject-eks-cluster
 # AWS_ACCOUNT_ID - your account id
 # ECR_REPO - brain-tasks-app
-# IMAGE_TAG - tag to deploy (if empty, fallback to CODEBUILD_RESOLVED_SOURCE_VERSION)
+# IMAGE_TAG - tag to deploy 
 
 : "${AWS_REGION:?Please set AWS_REGION}"
 : "${EKS_CLUSTER:?Please set EKS_CLUSTER}"
@@ -14,7 +14,6 @@ set -euo pipefail
 : "${ECR_REPO:?Please set ECR_REPO}"
 
 if [ -z "${IMAGE_TAG:-}" ]; then
-  # fallback when running inside CodeBuild
   IMAGE_TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}"
   IMAGE_TAG=$(echo "$IMAGE_TAG" | cut -c1-7)
 fi
