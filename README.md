@@ -152,6 +152,10 @@ App Logs:
 
 
 
+Code Pipeline : https://eu-north-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/brain-tasks-pipeline/view?region=eu-north-1
+
+
+
 <img width="940" height="194" alt="image" src="https://github.com/user-attachments/assets/a9dda5b0-578e-460b-a712-9a0897a1fb2f" />
 
 
