@@ -2,45 +2,36 @@ version: 0.2
 
 env:
   variables:
-    AWS_REGION: ap-south-1
-    ECR_REPO: brain-tasks-app
-  parameter-store:
-    AWS_ACCOUNT_ID: "/codebuild/aws_account_id"
+    ECR_REPO: "brain-tasks-app"
+    CLUSTER_NAME: "guviproject-eks-cluster"
+    AWS_REGION: "eu-north-1"
 
 phases:
-  install:
-    commands:
-      - echo "AWS_REGION=$AWS_REGION"
-      - echo "REPOSITORY_URI=$REPOSITORY_URI"
-      - echo "IMAGE_TAG=$IMAGE_TAG"
-
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws --version
-      - REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - echo "Logging in to Amazon ECR..."
+      - ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - echo "Building React app..."
+      - npm install
+      - npm run build
+      - echo "Building Docker image..."
+      - docker build -t ${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
+      - docker tag ${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION} ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
 
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing Docker images to ECR...
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
-      - printf '[{"name":"brain-tasks-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - echo Uploading imagedefinitions.json to S3...
-      - aws s3 cp imagedefinitions.json s3://brain-tasks-artifacts-project/
+      - echo "Pushing image to ECR..."
+      - docker push ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+
+      - echo "Updating EKS Deployment..."
+      - aws eks update-kubeconfig --region ${AWS_REGION} --name ${CLUSTER_NAME}
+      - kubectl set image deployment/brain-tasks-app brain-tasks-container=${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
 
 artifacts:
   files:
-    - imagedefinitions.json
+    - '**/*'
 
