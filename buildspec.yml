@@ -2,36 +2,35 @@ version: 0.2
 
 env:
   variables:
-    ECR_REPO: "brain-tasks-app"
-    CLUSTER_NAME: "guviproject-eks-cluster"
     AWS_REGION: "eu-north-1"
+    ECR_REPO: "brain-tasks-app"
 
 phases:
   pre_build:
     commands:
-      - echo "Logging in to Amazon ECR..."
+      - echo "Logging in to ECR..."
       - ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+      - REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
 
   build:
     commands:
-      - echo "Building React app..."
+      - echo "Building Vite app..."
+      - cd brain-tasks-source
       - npm install
       - npm run build
+      - cd ..
       - echo "Building Docker image..."
-      - docker build -t ${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
-      - docker tag ${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION} ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - docker build -t $REPOSITORY_URI:latest .
 
   post_build:
     commands:
-      - echo "Pushing image to ECR..."
-      - docker push ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
-
-      - echo "Updating EKS Deployment..."
-      - aws eks update-kubeconfig --region ${AWS_REGION} --name ${CLUSTER_NAME}
-      - kubectl set image deployment/brain-tasks-app brain-tasks-container=${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo "Pushing to ECR..."
+      - docker push $REPOSITORY_URI:latest
+      - echo "Writing imagedefinitions.json..."
+      - printf '[{"name":"brain-tasks-container","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
 
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
 

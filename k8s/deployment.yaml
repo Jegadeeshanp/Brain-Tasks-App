@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: brain-tasks-container
-          image: 679720146619.dkr.ecr.ap-south-1.amazonaws.com/brain-tasks-app:latest
+          image: 126685708527.dkr.ecr.eu-north-1.amazonaws.com/brain-tasks-app:v1
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           env:
             - name: NODE_ENV
               value: "production"

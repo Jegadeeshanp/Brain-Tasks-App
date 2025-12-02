@@ -3,7 +3,7 @@ set -e
 
 # Variables - update if needed
 EKS_CLUSTER="guviproject-eks-cluster"
-AWS_REGION="ap-south-1"
+AWS_REGION="eu-north-1"
 
 echo "Updating kubeconfig for EKS cluster $EKS_CLUSTER in region $AWS_REGION..."
 aws eks update-kubeconfig --region "$AWS_REGION" --name "$EKS_CLUSTER"

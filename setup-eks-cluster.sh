@@ -3,7 +3,7 @@ set -e
 
 # Configurable variables
 CLUSTER_NAME="guviproject-eks-cluster"
-REGION="ap-south-1"
+REGION="eu-north-1"
 NODEGROUP_NAME="standard-workers"
 NODE_TYPE="t3.small"
 NODES=2
