@@ -125,7 +125,7 @@ S3 Bucket : https://ap-south-1.console.aws.amazon.com/s3/buckets/brain-tasks-art
 
 
 
-**8. Monitoring**
+**8. CI/CD & Monitoring**
 
 CodeBuild : Success
 
