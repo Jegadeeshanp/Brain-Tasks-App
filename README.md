@@ -144,11 +144,55 @@ Guvi-Project1-CodeBuild-Succes-Logs : https://github.com/Jegadeeshanp/Brain-Task
 App Logs:
 <img width="940" height="358" alt="image" src="https://github.com/user-attachments/assets/7346d9bc-d3c5-42ab-8c86-ac25346f88f3" />
 
+=======================================================================
+
+**Updated Screenshots:**
+
+**CodePipeline**
+
+<img width="940" height="330" alt="image" src="https://github.com/user-attachments/assets/32d32b3a-42a3-447f-b23d-6398213b1311" />
+
+<img width="940" height="470" alt="image" src="https://github.com/user-attachments/assets/cfde1253-21a6-42d3-9673-6b68a420f648" />
+
+<img width="940" height="194" alt="image" src="https://github.com/user-attachments/assets/a9dda5b0-578e-460b-a712-9a0897a1fb2f" />
+
+<img width="940" height="294" alt="image" src="https://github.com/user-attachments/assets/e484a3fd-dec1-49d8-9827-0bf42b657324" />
+
+<img width="940" height="255" alt="image" src="https://github.com/user-attachments/assets/f0ecd596-4b50-4c73-bfd1-0679a476844f" />
+
+<img width="940" height="409" alt="image" src="https://github.com/user-attachments/assets/4b9d1abd-70be-432c-8458-85833d83a994" />
+
+<img width="940" height="431" alt="image" src="https://github.com/user-attachments/assets/e816091b-d5a0-4052-9f9c-dfcefeca2f81" />
+
+**CodeBuild**
+
+<img width="940" height="376" alt="image" src="https://github.com/user-attachments/assets/a69c64aa-bca5-445b-ba5b-0634c556df2a" />
+
+<img width="940" height="439" alt="image" src="https://github.com/user-attachments/assets/c9f5e87d-d7ca-4a3b-9192-38b424950e33" />
+
+**Entire Logs:**
+
+https://eu-north-1.console.aws.amazon.com/cloudwatch/home?region=eu-north-1#logsV2:log-groups/log-group/$252Faws$252Fcodebuild$252Fbrain-tasks-build/log-events/2b97e609-3d05-4d4f-98f8-d244d1939a3f
 
 
+**CloudWatch**
+
+<img width="940" height="433" alt="image" src="https://github.com/user-attachments/assets/9356fdad-aaba-4a37-9b16-13da0a13b736" />
+
+<img width="940" height="434" alt="image" src="https://github.com/user-attachments/assets/873febd0-da0c-4619-a96c-fc3f3b10e81a" />
+
+**App with LoadBalancer**
+
+<img width="940" height="476" alt="image" src="https://github.com/user-attachments/assets/3663117c-7f5b-4f30-ae06-a73e6aa586d2" />
 
 
+**Servers, Cluster & Load Balancer**
 
+<img width="940" height="184" alt="image" src="https://github.com/user-attachments/assets/fb0132fa-3f59-4df5-aa8a-254d45d71531" />
+
+<img width="940" height="418" alt="image" src="https://github.com/user-attachments/assets/c52dcf74-aed0-4ae3-9b3b-66e90be254fe" />
+
+<img width="940" height="434" alt="image" src="https://github.com/user-attachments/assets/5d02e951-1e52-46c5-9b79-52566b594bca" />
 
 
 
